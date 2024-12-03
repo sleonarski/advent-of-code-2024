@@ -1,5 +1,8 @@
 package com.orion.day1;
 
+import com.orion.utils.DataParser;
+import java.util.List;
+
 public class LocationIDService {
 
     private final TotalDistanceCalculator totalDistanceCalculator = new TotalDistanceCalculator();
@@ -7,7 +10,9 @@ public class LocationIDService {
     private final ListHolder listHolder;
 
     public LocationIDService(String path) {
-        this.listHolder = prepareListHolder(path);
+        List<String> data = DataParser.parseDataFromPath(path);
+        ListHolderPreparaotor listHolderPreparaotor = new ListHolderPreparaotor();
+        this.listHolder = listHolderPreparaotor.prepareListHolder(data);
     }
 
     public Integer getTotalDistance() {
@@ -16,9 +21,5 @@ public class LocationIDService {
 
     public Integer getSimilarityScore() {
         return similarityScoreCalculator.calculate(listHolder);
-    }
-
-    private static ListHolder prepareListHolder(String path) {
-        return DataFetcher.parseData(path);
     }
 }
