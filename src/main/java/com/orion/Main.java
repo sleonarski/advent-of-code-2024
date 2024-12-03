@@ -2,6 +2,7 @@ package com.orion;
 
 import com.orion.day1.LocationIDService;
 import com.orion.day2.Report;
+import com.orion.day2.ReportSafeValidator;
 import com.orion.day2.SafeReportService;
 import com.orion.utils.DataParser;
 
@@ -21,11 +22,11 @@ public class Main {
         System.out.println(similarityScoreResult);
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        SafeReportService safeReportService = new SafeReportService();
+        SafeReportService safeReportService = new SafeReportService(List.of(new ReportSafeValidator()));
         List<String> data = DataParser.parseDataFromPath("src/main/resources/day2/data.txt");
         List<Report> reports = safeReportService.prepareReport(data);
 
-        int safeReportCount = safeReportService.distinctSafeReport(reports);
-        System.out.println(safeReportCount);
+        safeReportService.runValidators(reports);
+
     }
 }

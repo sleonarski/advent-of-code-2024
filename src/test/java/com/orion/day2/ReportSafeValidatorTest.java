@@ -27,6 +27,6 @@ class ReportSafeValidatorTest {
         var reportSafeValidator = new ReportSafeValidator();
 
         //expected
-        Assertions.assertEquals(expectedValidationResult, reportSafeValidator.checkSafe(report));
+        Assertions.assertEquals(expectedValidationResult, reportSafeValidator.checkReport(report));
     }
 }

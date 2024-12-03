@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.stream.IntStream;
 
-class ReportSafeValidator {
+public class ReportSafeValidator implements ReportValidator{
 
-    boolean checkSafe(Report report) {
+    @Override
+    public boolean checkReport(Report report) {
         var levels = report.levels();
         return areLevelsAllIncreasingOrDecreasing(levels) && areLevelsDifferValid(levels);
     }
