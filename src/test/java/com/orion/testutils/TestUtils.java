@@ -6,8 +6,8 @@ import java.util.List;
 
 public class TestUtils {
 
-    public static Report prepareReport() {
-        return new Report(Arrays.stream("""
+    public static List<Report> prepareReports() {
+        return (Arrays.stream("""
                 7 6 4 2 1
                 1 2 7 8 9
                 9 7 6 2 1
@@ -15,13 +15,13 @@ public class TestUtils {
                 8 6 4 4 1
                 1 3 6 7 9
                 """.split("\\n"))
-                .map(TestUtils::convertToLevels)
+                .map(TestUtils::convertToReport)
                 .toList());
     }
 
-    private static List<Integer> convertToLevels(String r) {
-        return Arrays.stream(r.split("\\s"))
+    private static Report convertToReport(String r) {
+        return new Report(Arrays.stream(r.split("\\s"))
                 .map(Integer::valueOf)
-                .toList();
+                .toList());
     }
 }

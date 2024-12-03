@@ -7,15 +7,15 @@ class ReportPreparator {
 
     public static final String SPLIT_PATTERN = "\\s";
 
-    Report prepareReport(List<String> dataList) {
-        return new Report(dataList.stream()
-                .map(ReportPreparator::convertToLevels)
-                .toList());
+    List<Report> prepareReports(List<String> dataList) {
+        return dataList.stream()
+                .map(ReportPreparator::convertToReport)
+                .toList();
     }
 
-    private static List<Integer> convertToLevels(String r) {
-        return Arrays.stream(r.split(SPLIT_PATTERN))
+    private static Report convertToReport(String rawReportData) {
+        return new Report(Arrays.stream(rawReportData.split(SPLIT_PATTERN))
                 .map(Integer::valueOf)
-                .toList();
+                .toList());
     }
 }

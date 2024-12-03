@@ -1,7 +1,8 @@
 package com.orion.day2;
 
-import static com.orion.testutils.TestUtils.prepareReport;
+import static com.orion.testutils.TestUtils.prepareReports;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ class SafeReportTest {
     @Test
     void shouldDistinctSafeReports() {
         //given
-        Report reports = prepareReport();
+        List<Report> reports = prepareReports();
         SafeReportService safeReportService = new SafeReportService();
 
         //when

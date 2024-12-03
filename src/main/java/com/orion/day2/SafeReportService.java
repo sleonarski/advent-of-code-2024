@@ -1,10 +1,14 @@
 package com.orion.day2;
 
+import java.util.List;
+
 class SafeReportService {
 
-    private final ReportPreparator reportPreparator = new ReportPreparator();
+    ReportSafeValidator reportSafeValidator = new ReportSafeValidator();
 
-    int distinctSafeReport(Report report) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    int distinctSafeReport(List<Report> reports) {
+        return (int) reports.stream()
+                .filter(report -> reportSafeValidator.checkSafe(report))
+                .count();
     }
 }

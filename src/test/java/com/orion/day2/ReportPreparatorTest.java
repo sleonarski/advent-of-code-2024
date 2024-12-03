@@ -1,6 +1,6 @@
 package com.orion.day2;
 
-import static com.orion.testutils.TestUtils.prepareReport;
+import static com.orion.testutils.TestUtils.prepareReports;
 
 import com.orion.utils.DataParser;
 import org.junit.jupiter.api.Assertions;
@@ -16,9 +16,9 @@ class ReportPreparatorTest {
         ReportPreparator reportPreparator = new ReportPreparator();
 
         //when
-        var report = reportPreparator.prepareReport(dataList);
+        var report = reportPreparator.prepareReports(dataList);
 
         //then
-        Assertions.assertEquals(prepareReport(), report);
+        Assertions.assertEquals(prepareReports(), report);
     }
 }
