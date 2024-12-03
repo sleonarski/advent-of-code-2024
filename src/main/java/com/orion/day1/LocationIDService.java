@@ -2,14 +2,23 @@ package com.orion.day1;
 
 public class LocationIDService {
 
-    PairFinder pairFinder = new PairFinder();
-    DiffCalculator diffCalculator = new DiffCalculator();
+    private final TotalDistanceCalculator totalDistanceCalculator = new TotalDistanceCalculator();
+    private final SimilarityScoreCalculator similarityScoreCalculator = new SimilarityScoreCalculator();
+    private final ListHolder listHolder;
 
-    public Integer calculateTotalDistance(String path) {
-        var holder = DataFetcher.parseData(path);
-        var pairs = pairFinder.getPairs(holder);
-        return pairs.stream()
-                .map(pair -> diffCalculator.calculate(pair))
-                .reduce(0, Integer::sum);
+    public LocationIDService(String path) {
+        this.listHolder = prepareListHolder(path);
+    }
+
+    public Integer getTotalDistance() {
+        return totalDistanceCalculator.calculate(listHolder);
+    }
+
+    public Integer getSimilarityScore() {
+        return similarityScoreCalculator.calculate(listHolder);
+    }
+
+    private static ListHolder prepareListHolder(String path) {
+        return DataFetcher.parseData(path);
     }
 }

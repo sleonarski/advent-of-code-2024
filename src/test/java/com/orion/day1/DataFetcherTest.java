@@ -1,11 +1,9 @@
 package com.orion.day1;
 
-import com.orion.day1.DataFetcher.ListHolder;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class DataFetcherTest {
 

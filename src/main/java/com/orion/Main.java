@@ -6,8 +6,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        LocationIDService locationIDService = new LocationIDService();
-        var result = locationIDService.calculateTotalDistance("src/main/resources/day1/data.txt");
+        LocationIDService locationIDService = new LocationIDService("src/main/resources/day1/data.txt");
+        var result = locationIDService.getTotalDistance();
         System.out.println(result);
+
+        var similarityScoreResult = locationIDService.getSimilarityScore();
+        System.out.println(similarityScoreResult);
     }
 }

@@ -30,6 +30,4 @@ class DataFetcher {
     private static List<Integer> mapValuesToInt(List<String> list) {
         return list.stream().map(Integer::valueOf).toList();
     }
-
-    record ListHolder(List<Integer> left, List<Integer> right){}
 }
