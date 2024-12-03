@@ -22,14 +22,11 @@ class ReportSafeValidator {
 
     private boolean areLevelsDifferValid(List<Integer> levels) {
         return IntStream.range(0, levels.size() - 1)
-                .allMatch(i -> {
-                    var abs = Math.abs(levels.get(i) + levels.get(i + 1));
-                    return 1 <= abs && abs <= 3;
-                });
+                .allMatch(i -> areLevelDifferVaild(levels, i));
+    }
+
+    private static boolean areLevelDifferVaild(List<Integer> levels, int i) {
+        var abs = Math.abs(levels.get(i) - levels.get(i + 1));
+        return 1 <= abs && abs <= 3;
     }
 }
-
-/*
-    The levels are either all increasing or all decreasing.
-    Any two adjacent levels differ by at least one and at most three.
- */

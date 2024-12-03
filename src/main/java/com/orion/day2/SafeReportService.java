@@ -2,13 +2,18 @@ package com.orion.day2;
 
 import java.util.List;
 
-class SafeReportService {
+public class SafeReportService {
 
-    ReportSafeValidator reportSafeValidator = new ReportSafeValidator();
+    private final ReportSafeValidator reportSafeValidator = new ReportSafeValidator();
+    private final ReportPreparator reportPreparator = new ReportPreparator();
 
-    int distinctSafeReport(List<Report> reports) {
+    public List<Report> prepareReport(List<String> dataList) {
+        return reportPreparator.prepareReports(dataList);
+    }
+
+    public int distinctSafeReport(List<Report> reports) {
         return (int) reports.stream()
-                .filter(report -> reportSafeValidator.checkSafe(report))
+                .filter(reportSafeValidator::checkSafe)
                 .count();
     }
 }

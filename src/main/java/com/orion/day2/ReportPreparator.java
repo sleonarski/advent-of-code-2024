@@ -5,7 +5,7 @@ import java.util.List;
 
 class ReportPreparator {
 
-    public static final String SPLIT_PATTERN = "\\s";
+    private static final String SPLIT_PATTERN = "\\s";
 
     List<Report> prepareReports(List<String> dataList) {
         return dataList.stream()
