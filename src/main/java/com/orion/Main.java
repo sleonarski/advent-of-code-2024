@@ -27,6 +27,5 @@ public class Main {
         List<Report> reports = safeReportService.prepareReport(data);
 
         safeReportService.runValidators(reports);
-
     }
 }

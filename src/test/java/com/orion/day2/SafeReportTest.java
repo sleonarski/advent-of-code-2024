@@ -12,12 +12,15 @@ class SafeReportTest {
     void shouldDistinctSafeReports() {
         //given
         List<Report> reports = prepareReports();
-        SafeReportService safeReportService = new SafeReportService(List.of(new ReportSafeValidator()));
+        SafeReportService safeReportService = new SafeReportService(
+                List.of(new ReportSafeValidator(),
+                        new ProblemDampenerReportValidator()));
 
         //when
         safeReportService.runValidators(reports);
 
         //then
         Assertions.assertEquals(2, safeReportService.getReport(0));
+        Assertions.assertEquals(4, safeReportService.getReport(1));
     }
 }
