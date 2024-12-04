@@ -1,58 +1,82 @@
 package com.orion.day2;
 
+import static java.util.stream.Collectors.joining;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-class ProblemDampenerReportValidator implements ReportValidator {
+public class ProblemDampenerReportValidator implements ReportValidator {
 
-    private boolean isDamped;
+    private static Logger LOG = LoggerFactory.getLogger(ProblemDampenerReportValidator.class);
+    private Dampener dampener;
 
     @Override
     public boolean checkReport(Report report) {
-        isDamped = false;
+        dampener = new Dampener();
         var levels = report.levels();
-        boolean conditionsValid = areLevelsAllIncreasingOrDecreasing(levels, isDamped) && areLevelsDifferValid(levels, isDamped);
-        isDamped = false;
-        return conditionsValid;
+        var conditions = areLevelsAllIncreasingOrDecreasing(levels) && areLevelsDifferValid(levels);
+        if (!conditions) {
+            LOG.warn("Invalid report: {}", levels.stream().map(String::valueOf).collect(joining(", " ,"[ ", " ]")));
+        }
+
+        return conditions;
     }
 
-    private boolean areLevelsAllIncreasingOrDecreasing(List<Integer> levels, boolean isDamped) {
-        return isMonotonic(levels, (a, b) -> a < b, isDamped) || isMonotonic(levels, (a, b) -> a > b, isDamped);
+    private boolean areLevelsAllIncreasingOrDecreasing(List<Integer> levels) {
+        return isMonotonic(levels, (a, b) -> a < b) || isMonotonic(levels, (a, b) -> a > b);
     }
 
-    private boolean isMonotonic(List<Integer> levels, BiPredicate<Integer, Integer> condition, boolean isDamped) {
+    private boolean isMonotonic(List<Integer> levels, BiPredicate<Integer, Integer> condition) {
         boolean isValid = false;
-        for (int i = 0; i < levels.size() - 1; i++) {
-            Integer current = levels.get(i);
-            Integer previous = levels.get(i + 1);
+        dampener.setActive(false);
+        Integer previous = null;
+        var iterator = new ArrayList<>(levels).iterator();
+        while (iterator.hasNext()) {
+            var current = iterator.next();
 
-            isValid =  condition.test(current, previous);
-
-            if(!isValid) {
-                if (isDamped) {
-                    return false;
+            if (previous != null) {
+                if (!condition.test(previous, current)) {
+                    if (dampener.isActive()) {
+                        return false;
+                    }
+                    dampener.setActive(true);
+                    iterator.remove();
+                } else {
+                    previous = current;
+                    isValid = true;
                 }
-                this.isDamped = true;
+            } else {
+                previous = current;
             }
         }
         return isValid;
     }
 
-    private boolean areLevelsDifferValid(List<Integer> levels, boolean isDamped) {
+    private boolean areLevelsDifferValid(List<Integer> levels) {
         boolean isValid = false;
-        for (int i = 0; i < levels.size() - 1; i++) {
-            Integer current = levels.get(i);
-            Integer previous = levels.get(i + 1);
+        dampener.setActive(false);
+        Integer previous = null;
+        var iterator = new ArrayList<>(levels).iterator();
+        while (iterator.hasNext()) {
+            var current = iterator.next();
 
-            var abs = Math.abs(current - previous);
-
-            isValid = 1 <= abs && abs <= 3;
-
-            if(!isValid) {
-                if (isDamped) {
-                    return false;
+            if (previous != null) {
+                var abs = Math.abs(current - previous);
+                if (!(1 <= abs && abs <= 3)) {
+                    if (dampener.isActive()) {
+                        return false;
+                    }
+                    dampener.setActive(true);
+                    iterator.remove();
+                } else {
+                    previous = current;
+                    isValid = true;
                 }
-                this.isDamped = true;
+            } else {
+                previous = current;
             }
         }
         return isValid;

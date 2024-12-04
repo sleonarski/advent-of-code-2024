@@ -22,7 +22,7 @@ class ProblemDampenerReportValidatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("reports")
+    @MethodSource("com.orion.day2.InvalidProductionData#getData")
     void shouldCorrectlyValidReport(Report report, boolean expectedValidationResult) {
         //given
         var problemDampenerReportValidator = new ProblemDampenerReportValidator();
@@ -31,11 +31,3 @@ class ProblemDampenerReportValidatorTest {
         Assertions.assertEquals(expectedValidationResult, problemDampenerReportValidator.checkReport(report));
     }
 }
-/*
-    7 6 4 2 1: Safe without removing any level.
-    1 2 7 8 9: Unsafe regardless of which level is removed.
-    9 7 6 2 1: Unsafe regardless of which level is removed.
-    1 3 2 4 5: Safe by removing the second level, 3.
-    8 6 4 4 1: Safe by removing the third level, 4.
-    1 3 6 7 9: Safe without removing any level.
- */
