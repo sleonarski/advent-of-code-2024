@@ -12,7 +12,7 @@ class ListHolderPreparaotorTest {
     void shouldDownloadData() {
         //given
         var dataPath = "src/test/resources/day1/test-data.txt";
-        var dataList = DataParser.parseDataFromPath(dataPath);
+        var dataList = DataParser.parseAsDataListFromPath(dataPath);
         var listHolderPreparaotor = new ListHolderPreparaotor();
 
         //when

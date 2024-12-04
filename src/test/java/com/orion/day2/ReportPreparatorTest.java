@@ -12,7 +12,7 @@ class ReportPreparatorTest {
     void shouldPrepareReportFromInput() {
         //given
         String inputPath = "src/test/resources/day2/test-data.txt";
-        var dataList = DataParser.parseDataFromPath(inputPath);
+        var dataList = DataParser.parseAsDataListFromPath(inputPath);
         ReportPreparator reportPreparator = new ReportPreparator();
 
         //when

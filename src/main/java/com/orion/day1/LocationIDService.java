@@ -10,7 +10,7 @@ public class LocationIDService {
     private final ListHolder listHolder;
 
     public LocationIDService(String path) {
-        List<String> data = DataParser.parseDataFromPath(path);
+        List<String> data = DataParser.parseAsDataListFromPath(path);
         ListHolderPreparaotor listHolderPreparaotor = new ListHolderPreparaotor();
         this.listHolder = listHolderPreparaotor.prepareListHolder(data);
     }
