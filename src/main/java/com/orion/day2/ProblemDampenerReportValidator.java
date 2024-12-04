@@ -3,30 +3,26 @@ package com.orion.day2;
 import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiPredicate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ProblemDampenerReportValidator implements ReportValidator {
 
-    private static Logger LOG = LoggerFactory.getLogger(ProblemDampenerReportValidator.class);
     private Dampener dampener;
 
     @Override
     public boolean checkReport(Report report) {
         dampener = new Dampener();
         var levels = report.levels();
-        var conditions = areLevelsAllIncreasingOrDecreasing(levels) && areLevelsDifferValid(levels);
-        if (!conditions) {
-            LOG.warn("Invalid report: {}", levels.stream().map(String::valueOf).collect(joining(", " ,"[ ", " ]")));
-        }
-
-        return conditions;
+        return areLevelsAllIncreasingOrDecreasing(levels) && areLevelsDifferValid(levels);
     }
 
     private boolean areLevelsAllIncreasingOrDecreasing(List<Integer> levels) {
-        return isMonotonic(levels, (a, b) -> a < b) || isMonotonic(levels, (a, b) -> a > b);
+        var reverseLevels = new ArrayList<>(levels);
+        Collections.reverse(reverseLevels);
+        return (isMonotonic(levels, (a, b) -> a < b) || isMonotonic(reverseLevels, (a, b) -> a > b))
+                || (isMonotonic(levels, (a, b) -> a > b) || isMonotonic(reverseLevels, (a, b) -> a < b));
     }
 
     private boolean isMonotonic(List<Integer> levels, BiPredicate<Integer, Integer> condition) {

@@ -12,6 +12,7 @@ class ProblemDampenerReportValidatorTest {
 
     public static Stream<Arguments> reports() {
         return Stream.of(
+                Arguments.of(new Report(List.of(68, 66, 67, 69, 72, 73, 76)), true),
                 Arguments.of(new Report(List.of(7, 6, 4, 2, 1)), true),
                 Arguments.of(new Report(List.of(1, 2, 7, 8, 9)), false),
                 Arguments.of(new Report(List.of(9, 7, 6, 2, 1)), false),
@@ -22,7 +23,7 @@ class ProblemDampenerReportValidatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.orion.day2.InvalidProductionData#getData")
+    @MethodSource("reports")
     void shouldCorrectlyValidReport(Report report, boolean expectedValidationResult) {
         //given
         var problemDampenerReportValidator = new ProblemDampenerReportValidator();
